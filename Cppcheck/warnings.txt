@@ -1,0 +1,30 @@
+cmd-find.c:979:3: error: Address of local auto-variable assigned to a function parameter. [autoVariables]
+  fs->current = &current;
+  ^
+compat/imsg-buffer.c:49:13: error: syntax error [syntaxError]
+ TAILQ_HEAD(, ibuf) bufs;
+            ^
+window-tree.c:450:8: warning: Possible null pointer dereference: l [nullPointer]
+ qsort(l, n, sizeof *l, window_tree_cmp_window);
+       ^
+window-tree.c:443:6: note: Assignment 'l=NULL', assigned value is 0
+ l = NULL;
+     ^
+window-tree.c:445:2: note: Assuming condition is false
+ RB_FOREACH(wl, winlinks, &s->windows) {
+ ^
+window-tree.c:450:8: note: Null pointer dereference
+ qsort(l, n, sizeof *l, window_tree_cmp_window);
+       ^
+window-tree.c:496:8: warning: Possible null pointer dereference: l [nullPointer]
+ qsort(l, n, sizeof *l, window_tree_cmp_session);
+       ^
+window-tree.c:483:6: note: Assignment 'l=NULL', assigned value is 0
+ l = NULL;
+     ^
+window-tree.c:485:2: note: Assuming condition is false
+ RB_FOREACH(s, sessions, &sessions) {
+ ^
+window-tree.c:496:8: note: Null pointer dereference
+ qsort(l, n, sizeof *l, window_tree_cmp_session);
+       ^

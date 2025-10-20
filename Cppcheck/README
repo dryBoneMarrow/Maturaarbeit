@@ -1,0 +1,3 @@
+- cppcheck installieren
+- tmux klonen
+- `cppcheck --check-level=exhaustive -j $(nproc) . 2> warnings.txt`
