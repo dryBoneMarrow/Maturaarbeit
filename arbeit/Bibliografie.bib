@@ -1,0 +1,386 @@
+
+@article{cao_learning_2024,
+	title = {Learning to Detect Memory-related Vulnerabilities},
+	volume = {33},
+	issn = {1049-331X, 1557-7392},
+	url = {https://dl.acm.org/doi/10.1145/3624744},
+	doi = {10.1145/3624744},
+	abstract = {Memory-related vulnerabilities can result in performance degradation or even program crashes, constituting severe threats to the security of modern software. Despite the promising results of deep learning ({DL})-based vulnerability detectors, there exist three main limitations: (1) rich contextual program semantics related to vulnerabilities have not yet been fully modeled; (2) multi-granularity vulnerability features in hierarchical code structure are still hard to be captured; and (3) heterogeneous flow information is not well utilized. To address these limitations, in this article, we propose a novel {DL}-based approach, called
+              {MVD}+
+              , to detect memory-related vulnerabilities at the statement-level. Specifically, it conducts both intraprocedural and interprocedural analysis to model vulnerability features, and adopts a hierarchical representation learning strategy, which performs syntax-aware neural embedding within statements and captures structured context information across statements based on a novel Flow-Sensitive Graph Neural Networks, to learn both syntactic and semantic features of vulnerable code. To demonstrate the performance, we conducted extensive experiments against eight state-of-the-art {DL}-based approaches as well as five well-known static analyzers on our constructed dataset with 6,879 vulnerabilities in 12 popular C/C++ applications. The experimental results confirmed that
+              {MVD}+
+              can significantly outperform current state-of-the-art baselines and make a great trade-off between effectiveness and efficiency.},
+	pages = {1--35},
+	number = {2},
+	journaltitle = {{ACM} Transactions on Software Engineering and Methodology},
+	shortjournal = {{ACM} Trans. Softw. Eng. Methodol.},
+	author = {Cao, Sicong and Sun, Xiaobing and Bo, Lili and Wu, Rongxin and Li, Bin and Wu, Xiaoxue and Tao, Chuanqi and Zhang, Tao and Liu, Wei},
+	urldate = {2025-01-28},
+	date = {2024-02-29},
+	langid = {english},
+	keywords = {{IT}},
+	file = {PDF:/home/nando/Zotero/storage/9MZXGKRW/Cao et al. - 2024 - Learning to Detect Memory-related Vulnerabilities.pdf:application/pdf},
+}
+
+@book{payer_software_2021,
+	edition = {0.37},
+	title = {Software Security: Principles, Policies, and Protection},
+	url = {http://nebelwelt.net/SS3P/},
+	publisher = {{HexHive} Books},
+	author = {Payer, Mathias},
+	date = {2021-07},
+	langid = {american},
+	file = {Ebook:/home/nando/Zotero/storage/KEU7LPCF/Payer - 2021 - Software Security Principles, Policies, and Protection.epub:application/epub+zip;PDF:/home/nando/Zotero/storage/P6TTCE9Y/Payer - 2021 - Software Security Principles, Policies, and Protection.pdf:application/pdf},
+}
+
+@article{wang_mlee_nodate,
+	title = {{MLEE}: Effective Detection of Memory Leaks on Early-Exit Paths in {OS} Kernels},
+	abstract = {Memory leaks in operating system ({OS}) kernels can cause critical performance and security issues. However, it is quite challenging to detect memory leaks due to the inherent complexity and large-scale code base of real-world {OS} kernels. In this work, inspired by the observation that software bugs are often hidden in rarely-tested program paths, we focus on detecting memory leaks on early-exit (E-E) paths in {OS} kernels. To this end, we conduct a systematic study of memory management operations involved on E-E paths in {OS} kernels. Based on the ﬁndings, we design a novel leak detector for {OS} kernels: {MLEE}, which intelligently discovers memory leaks on E-E paths by cross-checking the presence of memory deallocations on different E-E paths and normal paths. {MLEE} successfully reports 120 new memory leak bugs in the Linux kernel. It is the ﬁrst time these memory leaks are uncovered by a leak detector for {OS} kernels.},
+	author = {Wang, Wenwen},
+	langid = {english},
+	file = {PDF:/home/nando/Zotero/storage/NDMNA8FI/Wang - MLEE Effective Detection of Memory Leaks on Early-Exit Paths in OS Kernels.pdf:application/pdf},
+}
+
+@inproceedings{sui_static_2012,
+	location = {Minneapolis {MN} {USA}},
+	title = {Static memory leak detection using full-sparse value-flow analysis},
+	isbn = {978-1-4503-1454-1},
+	url = {https://dl.acm.org/doi/10.1145/2338965.2336784},
+	doi = {10.1145/2338965.2336784},
+	abstract = {We introduce a static detector, Saber, for detecting memory leaks in C programs. Leveraging recent advances on sparse pointer analysis, Saber is the ﬁrst to use a full-sparse value-ﬂow analysis for leak detection. Saber tracks the ﬂow of values from allocation to free sites using a sparse valueﬂow graph ({SVFG}) that captures def-use chains and value ﬂows via assignments for all memory locations represented by both top-level and address-taken pointers. By exploiting ﬁeld-, ﬂow- and context-sensitivity during diﬀerent phases of the analysis, Saber detects leaks in a program by solving a graph reachability problem on its {SVFG}.},
+	eventtitle = {{ISSTA} '12: International Symposium on Software Testing and Analysis},
+	pages = {254--264},
+	booktitle = {Proceedings of the 2012 International Symposium on Software Testing and Analysis},
+	publisher = {{ACM}},
+	author = {Sui, Yulei and Ye, Ding and Xue, Jingling},
+	urldate = {2025-01-30},
+	date = {2012-07-15},
+	langid = {english},
+	file = {PDF:/home/nando/Zotero/storage/ZQKIPL8X/Sui et al. - 2012 - Static memory leak detection using full-sparse value-flow analysis.pdf:application/pdf},
+}
+
+@article{aslanyan_combining_2024,
+	title = {Combining Static Analysis With Directed Symbolic Execution for Scalable and Accurate Memory Leak Detection},
+	volume = {12},
+	issn = {2169-3536},
+	url = {https://ieeexplore.ieee.org/abstract/document/10549878},
+	doi = {10.1109/ACCESS.2024.3409838},
+	abstract = {This article introduces a novel method for the precise and scalable detection of memory leaks comprising two primary stages. Initially, context-, flow-, and field-sensitive static analysis is used to identify potential memory leaks. This includes an annotation system that allows specifying key properties of functions. Therefore, they do not need to be reanalyzed every time they are called. It also allows manual annotation of important library or system functions, thus enhancing analysis quality. The static analysis is conducted in reverse topological order on the call graph, enabling the parallel processing of functions within the same level of hierarchy. Subsequently, directed symbolic execution provides path-sensitivity and effectively filters out false positives. This process is performed concurrently for each bug detected by static analysis. This two-stage approach aims to enhance the efficiency and precision of memory leak detection in industrial software. The proposed method was implemented in the {MLH} (Memory Leak Hunter) tool, which identified numerous bugs in the open-source software, including {OpenSSL}, {FFmpeg}, and Radare2. These bugs were reported and confirmed by the community, thereby proving the effectiveness of the developed method.},
+	pages = {80128--80137},
+	journaltitle = {{IEEE} Access},
+	author = {Aslanyan, Hayk and Movsisyan, Hovhannes and Hovhannisyan, Hripsime and Gevorgyan, Zhora and Mkoyan, Ruslan and Avetisyan, Arutyun and Sargsyan, Sevak},
+	urldate = {2025-01-30},
+	date = {2024},
+	note = {Conference Name: {IEEE} Access},
+	keywords = {Annotations, Computer bugs, Detectors, Directed symbolic execution, Leak detection, memory leak, Resource management, static analysis, Static analysis},
+	file = {Full Text PDF:/home/nando/Zotero/storage/DS6EYNF7/Aslanyan et al. - 2024 - Combining Static Analysis With Directed Symbolic Execution for Scalable and Accurate Memory Leak Det.pdf:application/pdf;IEEE Xplore Abstract Record:/home/nando/Zotero/storage/NNYL7V6V/10549878.html:text/html},
+}
+
+@inproceedings{aslanyan_static_2022,
+	title = {Static Analysis Methods For Memory Leak Detection: A Survey},
+	url = {https://ieeexplore.ieee.org/abstract/document/9983955},
+	doi = {10.1109/IVMEM57067.2022.9983955},
+	shorttitle = {Static Analysis Methods For Memory Leak Detection},
+	abstract = {Memory leaks are still one of the common bugs in programs written in languages without garbage collectors. There is a list of methods to detect such bugs. One of the approaches is to use static analysis. This paper discusses static analysis methods for memory leak detection. Mainly those methods use two stages. First, they use different types of graphs to find memory leaks faster but with less precision. Then, for the detected cases they use path-sensitive analysis to increase precision. Additionally, we tested available tools on Juliet test suite. We chose false positive rate ({FPR}) and false negative rate ({FNR}) as metrics. On average {SMOKE} and Clang static analysis tools show the best {FPR} and {FNR}.},
+	eventtitle = {2022 Ivannikov Memorial Workshop ({IVMEM})},
+	pages = {1--6},
+	booktitle = {2022 Ivannikov Memorial Workshop ({IVMEM})},
+	author = {Aslanyan, Hayk and Gevorgyan, Zhora and Mkoyan, Ruslan and Movsisyan, Hovhannes and Sahakyan, Vardan and Sargsyan, Sevak},
+	urldate = {2025-01-30},
+	date = {2022-09},
+	langid = {american},
+	note = {{ISSN}: 2831-5847},
+	keywords = {Computer bugs, Leak detection, static analysis, Static analysis, bug detection, Conferences, Measurement, memory leaks, Memory management, survey},
+	file = {IEEE Xplore Abstract Record:/home/nando/Zotero/storage/RHL7T7NY/9983955.html:text/html;PDF:/home/nando/Zotero/storage/K3Z86LTC/Aslanyan et al. - 2022 - Static Analysis Methods For Memory Leak Detection A Survey.pdf:application/pdf},
+}
+
+@inproceedings{emamdoost_detecting_2021,
+	location = {Virtual},
+	title = {Detecting Kernel Memory Leaks in Specialized Modules with Ownership Reasoning},
+	isbn = {978-1-891562-66-2},
+	url = {https://www.ndss-symposium.org/wp-content/uploads/ndss2021_5B-4_24416_paper.pdf},
+	doi = {10.14722/ndss.2021.24416},
+	abstract = {The kernel space is shared by hardware and all processes, so its memory usage is more limited, and memory is harder to reclaim, compared to user-space memory; as a result, memory leaks in the kernel can easily lead to high-impact denial of service. The problem is particularly critical in longrunning servers. Kernel code makes heavy use of dynamic (heap) allocation, and many code modules within the kernel provide their own abstractions for customized memory management. On the other hand, the kernel code involves highly complicated data flow, so it is hard to determine where an object is supposed to be released. Given the complex and critical nature of {OS} kernels, as well as the heavy specialization, existing methods largely fail at effectively and thoroughly detecting kernel memory leaks.},
+	eventtitle = {Network and Distributed System Security Symposium},
+	booktitle = {Proceedings 2021 Network and Distributed System Security Symposium},
+	publisher = {Internet Society},
+	author = {Emamdoost, Navid and Wu, Qiushi and Lu, Kangjie and {McCamant}, Stephen},
+	urldate = {2025-01-30},
+	date = {2021},
+	langid = {english},
+	file = {PDF:/home/nando/Zotero/storage/W7RUYXD2/Emamdoost et al. - 2021 - Detecting Kernel Memory Leaks in Specialized Modules with Ownership Reasoning.pdf:application/pdf},
+}
+
+@inproceedings{wang_improving_2012,
+	location = {{USA}},
+	title = {Improving integer security for systems with {KINT}},
+	isbn = {978-1-931971-96-6},
+	series = {{OSDI}'12},
+	abstract = {Integer errors have emerged as an important threat to systems security, because they allow exploits such as buffer overflow and privilege escalation. This paper presents {KINT}, a tool that uses scalable static analysis to detect integer errors in C programs. {KINT} generates constraints from source code and user annotations, and feeds them into a constraint solver for deciding whether an integer error can occur. {KINT} introduces a number of techniques to reduce the number of false error reports. {KINT} identified more than 100 integer errors in the Linux kernel, the lighttpd web server, and {OpenSSH}, which were confirmed and fixed by the developers. Based on the experience with {KINT}, the paper further proposes a new integer family with {NaN} semantics to help developers avoid integer errors in C programs.},
+	pages = {163--177},
+	booktitle = {Proceedings of the 10th {USENIX} conference on Operating Systems Design and Implementation},
+	publisher = {{USENIX} Association},
+	author = {Wang, Xi and Chen, Haogang and Jia, Zhihao and Zeldovich, Nickolai and Kaashoek, M. Frans},
+	urldate = {2025-02-27},
+	date = {2012-10-08},
+	langid = {american},
+	file = {PDF:/home/nando/Zotero/storage/XQ2R77K6/Wang et al. - 2012 - Improving integer security for systems with KINT.pdf:application/pdf},
+}
+
+@inproceedings{suzuki_detecting_2020,
+	location = {Coimbra, Portugal},
+	title = {Detecting Struct Member-Related Memory Leaks Using Error Code Analysis in Linux Kernel},
+	rights = {https://ieeexplore.ieee.org/Xplorehelp/downloads/license-information/{IEEE}.html},
+	isbn = {978-1-7281-7735-9},
+	url = {https://ieeexplore.ieee.org/document/9307663/},
+	doi = {10.1109/ISSREW51248.2020.00097},
+	abstract = {Struct member-related memory leak can become a serious problem. Linux kernel is not an exception. According to our study of Linux Kernel patches, 54.6\% of all memory leak-related patches within the last two years were related to the leak of struct members. This occurs when a struct is freed before freeing its dynamically allocated struct members. Detecting these bugs in large-scale software requires to reduce analysis cost for scalability and effectively collect the state of a struct and its members.},
+	eventtitle = {2020 {IEEE} International Symposium on Software Reliability Engineering Workshops ({ISSREW})},
+	pages = {329--335},
+	booktitle = {2020 {IEEE} International Symposium on Software Reliability Engineering Workshops ({ISSREW})},
+	publisher = {{IEEE}},
+	author = {Suzuki, Keita and Kubota, Takafumi and Kono, Kenji},
+	urldate = {2025-02-27},
+	date = {2020-10},
+	langid = {english},
+	keywords = {Computer bugs, Static analysis, Memory management, Bug Detection, Kernel, Linux, Memory Leak, Software, Static Analysis, Tools},
+	file = {IEEE Xplore Abstract Record:/home/nando/Zotero/storage/5MC5ZWVE/9307663.html:text/html;PDF:/home/nando/Zotero/storage/A2UEGCU8/Suzuki et al. - 2020 - Detecting Struct Member-Related Memory Leaks Using Error Code Analysis in Linux Kernel.pdf:application/pdf},
+}
+
+@inproceedings{chen_koobe_2020,
+	location = {{USA}},
+	title = {{KOOBE}: towards facilitating exploit generation of kernel out-of-bounds write vulnerabilities},
+	isbn = {978-1-939133-17-5},
+	series = {{SEC}'20},
+	shorttitle = {{KOOBE}},
+	abstract = {The monolithic nature of modern {OS} kernels leads to a constant stream of bugs being discovered. It is often unclear which of these bugs are worth fixing, as only a subset of them may be serious enough to lead to security takeovers (i.e., privilege escalations). Therefore, researchers have recently started to develop automated exploit generation techniques (for {UAF} bugs) to assist the bug triage process. In this paper, we investigate another top memory vulnerability in Linux kernel -- out-of-bounds ({OOB}) memory write from heap. We design {KOOBE} to assist the analysis of such vulnerabilities based on two observations: (1) Surprisingly often, different {OOB} vulnerability instances exhibit a wide range of capabilities. (2) Kernel exploits are multi-interaction in nature (i.e., multiple syscalls are involved in an exploit) which allows the exploit crafting process to be modular. Specifically, we focus on the extraction of capabilities of an {OOB} vulnerability which will feed the subsequent exploitability evaluation process. Our system builds on several building blocks, including a novel capability-guided fuzzing solution to uncover hidden capabilities, and a way to compose capabilities together to further enhance the likelihood of successful exploitations. In our evaluation, we demonstrate the applicability of {KOOBE} by exhaustively analyzing 17 most recent Linux kernel {OOB} vulnerabilities (where only 5 of them have publicly available exploits), for which {KOOBE} successfully generated candidate exploit strategies for 11 of them (including 5 that do not even have any {CVEs} assigned). Subsequently from these strategies, we are able to construct fully working exploits for all of them.},
+	pages = {1093--1110},
+	booktitle = {Proceedings of the 29th {USENIX} Conference on Security Symposium},
+	publisher = {{USENIX} Association},
+	author = {Chen, Weiteng and Zou, Xiaochen and Li, Guoren and Qian, Zhiyun},
+	urldate = {2025-03-02},
+	date = {2020-08-12},
+	file = {Full Text PDF:/home/nando/Zotero/storage/GGW2ZWMK/Chen et al. - 2020 - KOOBE towards facilitating exploit generation of kernel out-of-bounds write vulnerabilities.pdf:application/pdf},
+}
+
+@inproceedings{fan_smoke_2019,
+	title = {{SMOKE}: Scalable Path-Sensitive Memory Leak Detection for Millions of Lines of Code},
+	doi = {10.1109/ICSE.2019.00025},
+	shorttitle = {{SMOKE}},
+	abstract = {Detecting memory leak at industrial scale is still not well addressed, in spite of tremendous efforts from both the industrial and academia in the past decades. Existing work suffers from an unresolved paradox – a highly precise analysis limits its scalability and an imprecise one seriously hurts its precision or recall. In this work, we present {SMOKE}, a staged approach to resolve this paradox. Instead of using a uniform precise analysis for all paths, in the first stage, we use a scalable but imprecise analysis to compute a succinct set of candidate memory leak paths. In the second stage, we leverage a more precise analysis to verify the feasibility of the candidates. Our first stage analysis is scalable, due to the design of a new sparse program representation, namely use-flow graph ({UFG}), which enables us to model the problem as a polynomial-time state analysis. Our second stage analysis is precise and still efficient, due to the smaller number of candidates and the design of a dedicated constraint solver. Experimental results demonstrated that {SMOKE} can finish checking industrial-sized projects, up to 8MLoC, in forty minutes with an average false positive rate of 24.4\%. Besides, {SMOKE} is significantly faster than the state-of-the-art research techniques as well as the industrial tools, with the speedup ranging from 27.9X to 105.9X. In the twenty-nine mature and extensively checked benchmark projects, {SMOKE} has discovered thirty previously-unknown memory leaks which were confirmed by developers, and one even got a {CVE} {ID}.},
+	author = {Fan, Gang and wu, Rongxin and Shi, Qingkai and Xiao, Xiao and Zhou, Jinguo and Zhang, Charles},
+	date = {2019-05-24},
+	langid = {american},
+	file = {Full Text PDF:/home/nando/Zotero/storage/YHMIB5TR/Fan et al. - 2019 - SMOKE Scalable Path-Sensitive Memory Leak Detection for Millions of Lines of Code.pdf:application/pdf},
+}
+
+@inproceedings{zhang_statically_2021,
+	location = {Virtual Event Republic of Korea},
+	title = {Statically Discovering High-Order Taint Style Vulnerabilities in {OS} Kernels},
+	isbn = {978-1-4503-8454-4},
+	url = {https://dl.acm.org/doi/10.1145/3460120.3484798},
+	doi = {10.1145/3460120.3484798},
+	abstract = {Static analysis is known to yield numerous false alarms when used in bug finding, especially for complex vulnerabilities in large code bases like the Linux kernel. One important class of such complex vulnerabilities is what we call “high-order taint style vulnerability”, where the taint flow from the user input to the vulnerable site crosses the boundary of a single entry function invocation (i.e., syscall). Due to the large scope and high precision requirement, few have attempted to solve the problem.},
+	eventtitle = {{CCS} '21: 2021 {ACM} {SIGSAC} Conference on Computer and Communications Security},
+	pages = {811--824},
+	booktitle = {Proceedings of the 2021 {ACM} {SIGSAC} Conference on Computer and Communications Security},
+	publisher = {{ACM}},
+	author = {Zhang, Hang and Chen, Weiteng and Hao, Yu and Li, Guoren and Zhai, Yizhuo and Zou, Xiaochen and Qian, Zhiyun},
+	urldate = {2025-03-25},
+	date = {2021-11-12},
+	langid = {english},
+	file = {PDF:/home/nando/Zotero/storage/KL7HFZ8L/Zhang et al. - 2021 - Statically Discovering High-Order Taint Style Vulnerabilities in OS Kernels.pdf:application/pdf},
+}
+
+@online{noauthor_dup3p_nodate,
+	title = {dup(3p)},
+	url = {https://man.archlinux.org/man/dup.3p.en},
+	urldate = {2025-10-15},
+	file = {dup(3p) — Arch manual pages:/home/nando/Zotero/storage/XT8NHP36/dup.3p.html:text/html},
+}
+
+@online{noauthor_staticanalyzer_nodate,
+	title = {{StaticAnalyzer} - {GCC} Wiki},
+	url = {https://gcc.gnu.org/wiki/StaticAnalyzer},
+	urldate = {2025-10-16},
+	file = {StaticAnalyzer - GCC Wiki:/home/nando/Zotero/storage/GQXZJR3B/StaticAnalyzer.html:text/html},
+}
+
+@online{noauthor_ipa_nodate,
+	title = {{IPA} passes ({GNU} Compiler Collection ({GCC}) Internals)},
+	url = {https://gcc.gnu.org/onlinedocs/gccint/IPA-passes.html},
+	urldate = {2025-10-16},
+	langid = {american},
+	file = {IPA passes (GNU Compiler Collection (GCC) Internals):/home/nando/Zotero/storage/TYX47VNH/IPA-passes.html:text/html},
+}
+
+@online{noauthor_installing_nodate,
+	title = {Installing · tmux/tmux Wiki},
+	url = {https://github.com/tmux/tmux/wiki/Installing#from-version-control},
+	urldate = {2025-10-16},
+	file = {Installing · tmux/tmux Wiki:/home/nando/Zotero/storage/P72HWSUJ/Installing.html:text/html},
+}
+
+@book{steenkamer_empirical_2019,
+	title = {An empirical study on use-after-free vulnerabilities},
+	publisher = {University of Delaware},
+	author = {Steenkamer, Benjamin P},
+	date = {2019},
+}
+
+@online{noauthor_analyzer_nodate,
+	title = {Analyzer Internals ({GNU} Compiler Collection ({GCC}) Internals)},
+	url = {https://gcc.gnu.org/onlinedocs/gccint/Analyzer-Internals.html},
+	urldate = {2025-10-17},
+	file = {Analyzer Internals (GNU Compiler Collection (GCC) Internals):/home/nando/Zotero/storage/3H3NMPRA/Analyzer-Internals.html:text/html},
+}
+
+@book{noauthor_isoiec_2024,
+	title = {{ISO}/{IEC} 9899:2024},
+	publisher = {{ISO}/{IEC}},
+	date = {2024-10-01},
+	file = {PDF:/home/nando/Zotero/storage/AHFYGNQQ/ISO, IEC - 9899 - 2018.pdf:application/pdf},
+}
+
+@online{noauthor_attribute_nodate,
+	title = {Attribute specifier sequence(since C23) - cppreference.com},
+	url = {https://en.cppreference.com/w/c/language/attributes.html},
+	urldate = {2025-10-17},
+	file = {Attribute specifier sequence(since C23) - cppreference.com:/home/nando/Zotero/storage/KWEU3U7W/attributes.html:text/html},
+}
+
+@book{marjamaki_cppcheck_2014,
+	title = {Cppcheck Design},
+	author = {Marjamäki, Daniel},
+	date = {2014-01-21},
+}
+
+@software{marjamaki_danmarcppcheck_2025,
+	title = {danmar/cppcheck},
+	rights = {{GPL}-3.0},
+	url = {https://github.com/danmar/cppcheck},
+	abstract = {static analysis of C/C++ code},
+	author = {Marjamäki, Daniel},
+	urldate = {2025-10-18},
+	date = {2025-10-17},
+	note = {original-date: 2009-03-04T20:16:45Z},
+	keywords = {c, c-plus-plus, cpp, cppcheck, cross-platform, static-analysis},
+}
+
+@online{noauthor_cppcheck_nodate,
+	title = {Cppcheck - A tool for static C/C++ code analysis},
+	url = {http://cppcheck.net/},
+	urldate = {2025-10-18},
+	file = {Cppcheck - A tool for static C/C++ code analysis:/home/nando/Zotero/storage/5YXI9YM6/cppcheck.net.html:text/html},
+}
+
+@report{rebert_secure_2024,
+	title = {Secure by Design: Google's Perspective on Memory Safety},
+	institution = {Google Security Engineering},
+	author = {Rebert, Alex and Kern, Christoph},
+	date = {2024},
+}
+
+@book{noauthor_memory_2025,
+	title = {Memory Safe Languages: Reducing Vulnerabilities in Modern Software Development},
+	date = {2025-06},
+}
+
+@book{noauthor_software_2023,
+	title = {Software Memory Safety},
+	date = {2023-04},
+}
+
+@book{noauthor_case_2023,
+	title = {The Case for Memory Safe Roadmaps},
+	date = {2023-12},
+}
+
+@software{drybonemarrow_drybonemarrowmaturaarbeit_2025,
+	title = {{dryBoneMarrow}/Maturaarbeit},
+	rights = {{MIT}},
+	url = {https://github.com/dryBoneMarrow/Maturaarbeit},
+	abstract = {Begleitdateien der Maturitätsarbeit},
+	author = {{dryBoneMarrow}},
+	urldate = {2025-10-19},
+	date = {2025-10-16},
+	note = {original-date: 2025-10-16T11:38:56Z},
+}
+
+@inreference{noauthor_tmux_2025,
+	title = {Tmux},
+	rights = {Creative Commons Attribution-{ShareAlike} License},
+	url = {https://de.wikipedia.org/w/index.php?title=Tmux&oldid=260646344},
+	abstract = {tmux ist ein Open Source Terminalmultiplexer für Unixoide Betriebssysteme. Die Software erlaubt es, mehrere Terminal-Sitzungen gleichzeitig aus einem einzigen Terminalfenster heraus zu bedienen. Damit ist es möglich, mehrere Kommandozeilen-Programme gleichzeitig in einer Sitzung im Vordergrund laufen zu lassen. Ebenfalls kann mit tmux Prozesse vom übergeordneten Terminal zu trennen („detach“), und somit auch Remote Sessions aufrechtzuerhalten, auch wenn sie nicht mehr sichtbar sind. Sie können später wieder in den Vordergrund geholt werden („attach“).},
+	booktitle = {Wikipedia},
+	urldate = {2025-10-19},
+	date = {2025-10-16},
+	langid = {german},
+	note = {Page Version {ID}: 260646344},
+	file = {Snapshot:/home/nando/Zotero/storage/XS4SHCNT/index.html:text/html},
+}
+
+@report{wogerer_survey_2005,
+	title = {A Survey of Static Program Analysis Techniques},
+	author = {Wögerer, Wolfgang},
+	date = {2005-10-18},
+}
+
+@report{gosain_static_2015,
+	title = {Static Analysis: A Survey of Techniques and Tools},
+	author = {Gosain, Anjana and Sharma, Ganga},
+	date = {2015-01-01},
+}
+
+@online{noauthor_smoke_nodate,
+	title = {{SMOKE} Memory Leak Detector},
+	url = {https://smokeml.github.io/},
+	abstract = {{SMOKE} Scalable Path-Sensitive Memory Leak Detection for Millions of Lines of Code.},
+	titleaddon = {{SMOKE} Memory Leak Detector},
+	urldate = {2025-10-19},
+	langid = {american},
+	file = {Snapshot:/home/nando/Zotero/storage/9GZ7B2TS/smokeml.github.io.html:text/html},
+}
+
+@online{noauthor_sri-cslgllvm_nodate,
+	title = {{SRI}-{CSL}/gllvm: Whole Program {LLVM}: wllvm ported to go},
+	url = {https://github.com/SRI-CSL/gllvm},
+	urldate = {2025-10-19},
+	file = {SRI-CSL/gllvm\: Whole Program LLVM\: wllvm ported to go:/home/nando/Zotero/storage/CTGQN4SB/gllvm.html:text/html},
+}
+
+@online{noauthor_icse_nodate,
+	title = {{ICSE} 2019 Artifact Evaluation for {SMOKE}},
+	url = {https://smokeml.github.io/producebc/},
+	abstract = {{SMOKE} Scalable Path-Sensitive Memory Leak Detection for Millions of Lines of Code.},
+	titleaddon = {{SMOKE} Memory Leak Detector},
+	urldate = {2025-10-19},
+	langid = {american},
+	file = {Snapshot:/home/nando/Zotero/storage/HUEEQHFA/producebc.html:text/html},
+}
+
+@online{malcolm_improvements_2023,
+	title = {Improvements to static analysis in the {GCC} 13 compiler},
+	url = {https://developers.redhat.com/articles/2023/05/31/improvements-static-analysis-gcc-13-compiler},
+	abstract = {{GCC} 13 includes enhancements to -fanalyzer, a static analysis pass that can identify issues at compile-time},
+	titleaddon = {Red Hat Developer},
+	author = {Malcolm, David},
+	urldate = {2025-10-19},
+	date = {2023-05-31},
+	langid = {english},
+	note = {Section: Linux},
+	file = {Snapshot:/home/nando/Zotero/storage/8HR7WA6Q/improvements-static-analysis-gcc-13-compiler.html:text/html},
+}
+
+@inreference{noauthor_call_2025,
+	title = {Call graph},
+	rights = {Creative Commons Attribution-{ShareAlike} License},
+	url = {https://en.wikipedia.org/w/index.php?title=Call_graph&oldid=1308178128},
+	abstract = {A call graph (also known as a call multigraph) is a control-flow graph, which represents calling relationships between subroutines in a computer program. Each node represents a procedure and each edge (f, g) indicates that procedure f calls procedure g. Thus, a cycle in the graph indicates recursive procedure calls.},
+	booktitle = {Wikipedia},
+	urldate = {2025-10-20},
+	date = {2025-08-27},
+	langid = {english},
+	note = {Page Version {ID}: 1308178128},
+	file = {Snapshot:/home/nando/Zotero/storage/4Q6BKS9U/index.html:text/html},
+}

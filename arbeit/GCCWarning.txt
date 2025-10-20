@@ -1,0 +1,74 @@
+cmd-pipe-pane.c: In function ‘cmd_pipe_pane_exec’:
+cmd-pipe-pane.c:141:28: warning: leak of file descriptor ‘dup2(pipe_fd[1], 0)’ [CWE-775] [-Wanalyzer-fd-leak]
+  141 |                         if (dup2(pipe_fd[1], STDIN_FILENO) == -1)
+      |                            ^
+  ‘cmd_pipe_pane_exec’: events 1-11
+   71 |         if (window_pane_exited(wp)) {
+      |            ^
+      |            |
+      |            (1) following ‘false’ branch... ─>─┐
+      |                                               │
+......
+      |                                               │
+      |┌──────────────────────────────────────────────┘
+   77 |│        old_fd = wp->pipe_fd;
+      |│        ~~~~~~~~~~~~~~~~~~~~
+      |│               |
+      |└──────────────>(2) ...to here
+......
+   90 |         if (args_count(args) == 0 || *args_string(args, 0) == '\0')
+      |            ~
+      |            |
+      |            (3) following ‘false’ branch... ─>─┐
+      |                                               │
+......
+      |                                               │
+      |┌──────────────────────────────────────────────┘
+   99 |│        if (args_has(args, 'o') && old_fd != -1)
+      |│            ~~~~~~~~~~~~~~~~~~~
+      |│            |
+      |└───────────>(4) ...to here
+......
+  112 |         if (socketpair(AF_UNIX, SOCK_STREAM, PF_UNSPEC, pipe_fd) != 0) {
+      |            ~
+      |            |
+      |            (5) following ‘false’ branch... ─>─┐
+      |                                               │
+......
+      |                                               │
+      |┌──────────────────────────────────────────────┘
+  118 |│        ft = format_create(cmdq_get_client(item), item, FORMAT_NONE, 0);
+      |│             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |│             |
+      |└────────────>(6) ...to here
+......
+  126 |         switch (fork()) {
+      |         ~~~~~~
+      |         |
+      |         (7) following ‘case 0:’ branch... ─>─┐
+      |                                              │
+......
+      |                                              │
+      |┌─────────────────────────────────────────────┘
+  133 |│        case 0:
+      |│        ~~~~
+      |│        |
+      |└───────>(8) ...to here
+......
+  140 |                 if (out) {
+      |                    ~
+      |                    |
+      |                    (9) following ‘true’ branch (when ‘out != 0’)... ─>─┐
+      |                                                                        │
+      |                                                                        │
+      |┌───────────────────────────────────────────────────────────────────────┘
+  141 |│                        if (dup2(pipe_fd[1], STDIN_FILENO) == -1)
+      |│                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |│                            |
+      |└───────────────────────────>(10) ...to here
+      |                             (11) opened here
+  ‘cmd_pipe_pane_exec’: event 12
+  141 |                         if (dup2(pipe_fd[1], STDIN_FILENO) == -1)
+      |                            ^
+      |                            |
+      |                            (12) ⚠️  ‘dup2(pipe_fd[1], 0)’ leaks here; was opened at (11)
