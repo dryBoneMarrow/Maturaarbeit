@@ -28,15 +28,15 @@ Zuerst bespreche ich das nötige Hintergrundwissen, was statische Code-Analyse �
 Dieses Kapitel behandelt die theoretischen Grundlagen zur statischen Code-Analyse, auf denen die folgenden Kapitel aufbauen. Es werden keine eigenen Erkenntnisse präsentiert und keine Schlussfolgerungen gezogen. Grundlegend lässt sich zwischen zwei Formen der Programmanalyse unterscheiden: statische und dynamische Analyse. Bei der dynamischen Code-Analyse wird das zu analysierende Programm ausgeführt und man schaut, wie es unter verschiedenen Konditionen reagiert. Im Gegensatz dazu wird bei der statischen Analyse der Code direkt überprüft.@gosain_static_2015
 
 == Anwendungsbereiche
-Statische Code-Analyse findet in vielen Bereichen der Softwareentwicklung Anwendung, vom Linting über die Softwareoptimierung, bis hin zum Finden von ernsten Sicherheitslücken.@wogerer_survey_2005
+Statische Code-Analyse findet in vielen Bereichen der Softwareentwicklung Anwendung, vom Linten über die Softwareoptimierung, bis hin zum Finden von ernsten Sicherheitslücken.@wogerer_survey_2005
 #figure(
   image("lint.png"),
   caption: [Auch eine Form der statischen Code-Analyse: Linting],
 )<linting>
-Die meisten modernen Compiler analysieren Code um ihn zu optimieren. Clang (und andere Compiler) analysieren Code ebenfalls, um darin Fehler zu finden. Eine einfache Version davon ist das Linting, wie es in @linting zu sehen ist. Hier arbeitet im Hintergrund Clang und analysiert das Programm direkt im Editor um den Programmierer auf Mängel darin hinzuweisen.\
+Die meisten modernen Compiler analysieren Code, um ihn zu optimieren. Clang (und andere Compiler) analysieren Code ebenfalls, um darin Fehler zu finden. Eine einfache Version davon ist das Linten, wie es in @linting zu sehen ist. Hier arbeitet im Hintergrund Clang und analysiert das Programm direkt im Editor, um den Programmierer auf Mängel darin hinzuweisen.\
 
 === Sicherheit
-In dieser Arbeit liegt der Fokus auf statischer Code-Analyse zum finden von Speicherbugs. Speicherbugs entstehen, wenn ein Programm auf Speicherbereiche zugreift (schreiben oder lesen), die ihm nicht zugewiesen wurde. Resultat ist sogenanntes «undefined behaviour», das Programm kann in einem solchen Falls also abstürzen, fehlerhaft weiterlaufen oder -- im schlimmsten Fall -- gehackt werden. Solche Bugs entstehen häufig durch hängende Zeiger, also Zeiger die eine Adresse auf einen bereits freigegebenen (oder nie reservierten) Speicherbereich besitzen.
+In dieser Arbeit liegt der Fokus auf statischer Code-Analyse zum Finden von Speicherbugs. Speicherbugs entstehen, wenn ein Programm auf Speicherbereiche zugreift (schreiben oder lesen), die ihm nicht zugewiesen wurde. Resultat ist sogenanntes «undefined behaviour», das Programm kann in einem solchen Fall also abstürzen, fehlerhaft weiterlaufen oder -- im schlimmsten Fall -- gehackt werden. Solche Bugs entstehen häufig durch hängende Zeiger, also Zeiger die eine Adresse auf einen bereits freigegebenen (oder nie reservierten) Speicherbereich besitzen.
 
 == Weitere Begriffe
 Es müssen ein paar Begriffe geklärt werden:
@@ -45,12 +45,12 @@ Der Präprozessor nimmt eine Datei als Input, verarbeitet gewisse Direktiven und
 === Dereferenzieren
 Dereferenzieren bedeutet einer Speicheradresse zu folgen und auf deren Inhalt zuzugreifen.
 === LLVM IR
-Einige Analysetools arbeitet mit der LLVM Intermediate Represenatation, diese ist ein Zwischenprodukt beim Kompilieren von Source Code mittels Clang.
+Einige Analysetools arbeitet mit der LLVM Intermediate Representation, diese ist ein Zwischenprodukt beim Kompilieren von Source Code mittels Clang.
 === Attribute
 Attribute sind Verhaltensmerkmale, die verschiedenen Codestellen zugewiesen werden können.
 
 == Pfadsensibilität
-Bei der statischen Code Analyse kann man generell zwischen zwei Typen unterscheiden, pfadsensiblen und pfadunsensiblen Tools. Pfadsensible Analysetools berücksichtigen Codeverzweigungen und beschränken sich so auf mögliche Ausführungspfade während pfadunsensible Ansätze alle Pfäde als möglich betrachten. Pfadsensible Tools sind somit genauer aber in der Regel rechenintensiver.@fan_smoke_2019
+Bei der statischen Code-Analyse kann man generell zwischen zwei Typen unterscheiden, pfadsensiblen und pfadunsensiblen Tools. Pfadsensible Analysetools berücksichtigen Codeverzweigungen und beschränken sich so auf mögliche Ausführungspfade während pfadunsensible Ansätze alle Pfade als möglich betrachten. Pfadsensible Tools sind somit genauer aber in der Regel rechenintensiver.@fan_smoke_2019
 
 
 = Methoden
@@ -63,21 +63,25 @@ tmux ist ein 2007 erschienenes C Programm, das seinen Ursprung in OpenBSD#footno
 = Statische Code-Analyse
 
 == GCC
-GCC ist eine freie #footnote[Frei im Sinne von Freiheit] Sammlung von Compilern für verschiedene Programmiersprachen und findet eine sehr breite Anwendung auf den verschiedensten Plattformen und Systemen. Seit der 10. Version aus dem Jahre 2020 unterstützt GCC selbst statische Code Analyse zum finden von Fehlern.@noauthor_staticanalyzer_nodate Diese Arbeit wurde von RedHat finanziert.@malcolm_improvements_2023 Da das Analyseprogramm Teil des Compilers ist, ist es mithilfe der bereits bestehenden Infrastruktur implementiert. Hierfür wird ein sogenannter «Inter-procedural optimization pass»@noauthor_ipa_nodate angewandt, das heisst, das Analyseprogramm arbeitet in der gleichen Phase wie die Optimierungsmechanismen, die für Optimierungen zwischen verschiedenen Routinen verantwortlich sind. Somit hat das Analyseprogramm Zugriff auf den gesamten Aufrufgraph und muss diesen im Gegensatz zu anderen Analysewerkzeugen nicht selbst kreieren, höchstens modifizieren.
+GCC ist eine freie #footnote[Frei im Sinne von Freiheit] Sammlung von Compilern für verschiedene Programmiersprachen und findet eine sehr breite Anwendung auf den verschiedensten Plattformen und Systemen. Seit der 10. Version aus dem Jahre 2020 unterstützt GCC selbst statische Code-Analyse zum Finden von Fehlern.@noauthor_staticanalyzer_nodate Diese Arbeit wurde von Red Hat finanziert.@malcolm_improvements_2023 Da das Analyseprogramm Teil des Compilers ist, ist es mithilfe der bereits bestehenden Infrastruktur implementiert. Hierfür wird ein sogenannter «Inter-procedural optimization pass»@noauthor_ipa_nodate angewandt, das heisst, das Analyseprogramm arbeitet in der gleichen Phase wie die Optimierungsmechanismen, die für Optimierungen zwischen verschiedenen Routinen verantwortlich sind. Somit hat das Analyseprogramm Zugriff auf den gesamten Aufrufgraph und muss diesen im Gegensatz zu anderen Analysewerkzeugen nicht selbst kreieren, höchstens modifizieren.
 
 === Anwendung
 Es ist sehr einfach, die statische Analysefunktionen von GCC auszutesten, da sie direkt im Compiler integriert sind und somit keiner weiteren Konfiguration erfordern. Um den Code mittels GCC statisch zu untersuchen, reicht es, die Option `-fanalyzer` für GCC zu aktivieren. Bei Tmux geht dies durch die Modifikation der Datei `Makefile.am`, indem man die Variable `AM_CFLAGS` um die Option erweitert. Danach kann man so wie im GitHub Repository von Tmux beschrieben@noauthor_installing_nodate den Code kompilieren.
 
 Beim Erstellungsprozess wird sehr viel Text ausgegeben, da jedoch die Warnungen über einen anderen Datenstrom kommen, kann man diese leicht herausfiltern, zum Beispiel in Bash wie folgt: `make 2> warnings.txt`. Zur Auswertung finden sich so alle wichtigen Informationen in der `warnings.txt` Datei.
 
-Der Entwickler, David Malcolm, strebt eine doppelt so lange Kompilierungszeit im Vergleich zur Kompilierung ohne statische Analyse an, was im Verhältnis zu anderen Analysetools sehr sportlich ist. Um Tmux ohne Modifikationen zu Erstellen benötigte ich 22.98 Sekunden, zum Erstellen inklusive der Analyse 71.52 Sekunden, was über dreifach so lange ist. Er schreibt, dass diese Zeit bei einigen Projekten eingehalten werden könne.@noauthor_staticanalyzer_nodate Es ist möglich, für die Kompilierung alle Prozessorkerne zu nutzen, dann wird die relative Zeitdifferenz noch grösser, nämlich 22.344 Sekunden zu 4.145 Sekunden, beziehungsweise über fünf mal so lange.
+Der Entwickler, David Malcolm, strebt eine doppelt so lange Kompilierungszeit im Vergleich zur Kompilierung ohne statische Analyse an, was im Verhältnis zu anderen Analysetools sehr sportlich ist. Um Tmux ohne Modifikationen zu Erstellen, benötigte ich 22,98 Sekunden, zum Erstellen inklusive der Analyse 71,52 Sekunden, was über dreifach so lange ist. Er schreibt, dass diese Zeit bei einigen Projekten eingehalten werden könne.@noauthor_staticanalyzer_nodate Es ist möglich, für die Kompilierung alle Prozessorkerne zu nutzen, dann wird die relative Zeitdifferenz noch grösser, nämlich 22,344 Sekunden zu 4,145 Sekunden, beziehungsweise über fünfmal so lange.
 
 === Auswertung
 Insgesamt hat GCC mit dem `-fanalyzer` Argument bei der Kompilation von Tmux 25 zusätzliche Warnungen ausgegeben. Diese lassen sich wie folgt aufteilen:
 #figure(
   table(
     columns: 3,
-    table.header([Warnung], [Anzahl], [Genauigkeit#footnote[gleichwertige Warnungen werden einfach gezählt]]),
+    table.header(
+      [Warnung],
+      [Anzahl],
+      [Genauigkeit#footnote[gleichwertige Warnungen werden einfach gezählt]],
+    ),
     [-Wanalyzer-use-of-uninitialized-value], [3], [50%],
     [-Wanalyzer-fd-leak], [6], [0%],
     [-Wanalyzer-fd-use-without-check], [3], [0%],
@@ -148,7 +152,7 @@ Diese Warnung ist von der Kategorie `-Wanalyzer-fd-leak`, das heisst, GCC denkt,
   caption: [Problematische Stelle `cmd-pipe-pane.c`],
 )<cmd-pipe-pane.c>
 GCC sagt uns (@GCCOUT), dass bei der Zeile 141 (gelb markiert) der Dateideskriptor `dup2(pipe_fd[1], 0)` entweicht. Die `dup2` Funktion lässt den als zweites Argument übergegebenen Dateideskriptor auf die gleiche Datei zeigen wie der erste. Sie gibt wirklich einen Dateideskriptor zurück, dessen Wert nirgendwo im Code gespeichert wird, was einem Dateideskriptor-Leck entsprechen würde. Jedoch findet sich in der Dokumentation zu `dup2` folgende Bemerkung: _«The dup2() function shall cause the file descriptor fildes2 to refer to the same open file description as the file descriptor fildes [...] and shall return fildes2.»_@noauthor_dup3p_nodate Das bedeutet, `STDIN_FILENO` hat denselben Wert wie der angeblich entwichene Dateideskriptor. Somit hat es hier kein Leck und die Warnung ist falsch-positiv. Tatsächlich kritisieren könnte man, dass `pipe_fd[0]` nicht geschlossen wird, bevor `excl()` aufgerufen wird. So bleibt, während beliebiger Code ausgeführt wird, `pipe_fd[0]` ungenutzt offen, ohne danach wieder gebraucht zu werden.\
-Sobald ein `dup2` in einem if-Statement ohne Zuweisung steht, löst GCC eine Warnung aus. Dieses Problem ist nicht leicht sauber zu beheben, da eine statische Analysesoftware gar keine Kenntnis davon hat, dass der Rückgabewert gleich dem zweiten Argument ist. Man müsste entweder mit Attributen und Hinweisen für den Compiler arbeiten oder aber eine einzige Ausnahme für diese Funktion kreieren. Ersteres bedingt sehr grossen Aufwand und Zweiteres müsste für alle Funktionen wiederholt werden, die ein identisches Verhalten aufweisen. Dies stellt keine schöne Lösung dar. Es gibt fünf weitere falsch-positive Warnungen des selben Typs (Nr.4,9,10,11), die sich ebenfalls auf die `dup2` Funktion beziehen, eine davon (Nr. 4) befindet sich in derselben Datei und ist rot hervorgehoben (@cmd-pipe-pane.c:148).
+Sobald ein `dup2` in einer bedingten Anweisung ohne Zuweisung steht, löst GCC eine Warnung aus. Dieses Problem ist nicht leicht sauber zu beheben, da eine statische Analysesoftware gar keine Kenntnis davon hat, dass der Rückgabewert gleich dem zweiten Argument ist. Man müsste entweder mit Attributen und Hinweisen für den Compiler arbeiten oder aber eine einzige Ausnahme für diese Funktion kreieren. Ersteres bedingt sehr grossen Aufwand und Zweiteres müsste für alle Funktionen wiederholt werden, die ein identisches Verhalten aufweisen. Dies stellt keine schöne Lösung dar. Es gibt fünf weitere falsch-positive Warnungen desselben Typs (Nr.4,9,10,11), die sich ebenfalls auf die `dup2` Funktion beziehen, eine davon (Nr. 4) befindet sich in derselben Datei und ist rot hervorgehoben (@cmd-pipe-pane.c:148).
 \
 \
 Auch die 3 Fehler der Kategorie `-Wanalyzer-fd-use-without-check` (Nr. 3,5,6) geschehen, da GCC das Verhalten der `dup2` Funktion nicht vollständig kennt.
@@ -198,8 +202,8 @@ Die relevanten Zeilen sind im Code (@cmd-pipe-pane.c) blau markiert. `null_fd` w
   ```,
   caption: [Vereinfachter Code aus mode-tree.c],
 )
-Das Problem hier ist, dass `mtd` in Zeile 27 dereferenziert wird, ohne zu wissen, ob `mtd` bereits freigegeben wurde. Bevor `mtd` dereferenziert wird, wird, wenn die Konditionen stimmen, `mode_tree_display_menu()` mit `mtd` als Argument aufgerufen. Innerhalb dieser Funktion wird, ebenfalls nur wenn gewisse Konditionen stimmen, `mode_tree_remove_ref()` aufgerufen, wodurch letztendlich `mtd` freigegeben wird. Passiert dies, wird in Zeile 27 ein hängender Zeiger dereferenziert, was unvorhergesehene Folgen, wie zum Beispiel ein Applikationsabsturz.\
-Passieren tut dies in der Praxis kaum sehr häufig, da ziemlich viele Bedingungen zugleich erfüllt sein müssten, möglich ist es trotzdem. Ein einziger solcher Fehler ist realistisch gesehen nicht weiter schlimm, doch je mehr dieser unwahrscheinlichen use-after-free Fehler im Programm sind, desto unstabiler läuft es. Benjamin Steenkamer beurteilt solche Bugs wie folgt: _«The issue is also exacerbated by the fact that UAF#footnote[=*u*\se *a*\fter *f*\ree] vulnerabilities don’t have to be exploited by an attacker to cause a crash, as one can occur through normal program execution when the vulnerability is present.»_#ref(<steenkamer_empirical_2019>,supplement: [S. 19])
+Das Problem hier ist, dass `mtd` in Zeile 27 dereferenziert wird, ohne zu wissen, ob `mtd` bereits freigegeben wurde. Bevor `mtd` dereferenziert wird, wird, wenn die Konditionen stimmen, `mode_tree_display_menu()` mit `mtd` als Argument aufgerufen. Innerhalb dieser Funktion wird, ebenfalls, nur wenn gewisse Konditionen stimmen, `mode_tree_remove_ref()` aufgerufen, wodurch letztendlich `mtd` freigegeben wird. Passiert dies, wird in Zeile 27 ein hängender Zeiger dereferenziert, was unvorhergesehene Folgen, wie zum Beispiel ein Applikationsabsturz.\
+Passieren tut dies in der Praxis kaum sehr häufig, da ziemlich viele Bedingungen zugleich erfüllt sein müssten, möglich ist es trotzdem. Ein einziger solcher Fehler ist realistisch gesehen nicht weiter schlimm, doch je mehr dieser unwahrscheinlichen use-after-free Fehler im Programm sind, desto unstabiler läuft es. Benjamin Steenkamer beurteilt solche Bugs wie folgt: _«The issue is also exacerbated by the fact that UAF#footnote[=*u*\se *a*\fter *f*\ree] vulnerabilities don’t have to be exploited by an attacker to cause a crash, as one can occur through normal program execution when the vulnerability is present.»_#ref(<steenkamer_empirical_2019>, supplement: [S. 19])
 \
 \
 Die Warnungen Nr. 24 und 25 stimmen, der Code ist jedoch relativ komplex. Ein vereinfachtes Codebeispiel zeigt, was GCC gefunden hat:
@@ -229,24 +233,24 @@ int main() {
 }
 
 ```
-Das Problem ist, dass in der Zeile 21 `a` derefernziert wird, obwohl `a` `NULL` sein könnte. GCC hat gleich zwei solcher Codestrukturen korrekt identifiziert. Würde man in diesem Codebeispiel Zeile 5 auf einen Wert ungleich `NULL` setzen, würde GCC keine Warnung auslösen, was zeigt, dass GCC über Funktionen hinweg ein relativ gutes Verständnis des Codes hat. Dies liegt daran, dass das Analyseprogramm wie oben bereits erwähnt als «Inter-procedural optimization pass» implementiert ist.
+Das Problem ist, dass in der Zeile 21 `a` dereferenziert wird, obwohl `a` `NULL` sein könnte. GCC hat gleich zwei solcher Codestrukturen korrekt identifiziert. Würde man in diesem Codebeispiel Zeile 5 auf einen Wert ungleich `NULL` setzen, würde GCC keine Warnung auslösen, was zeigt, dass GCC über Funktionen hinweg ein relativ gutes Verständnis des Codes hat. Dies liegt daran, dass das Analyseprogramm wie oben bereits erwähnt als «Inter-procedural optimization pass» implementiert ist.
 \
 \
 Ebenfalls interessant sind die Warnungen Nr. 15 und 16, denn sie überschneiden sich. Nr. 15 zeigt einen Pfad auf, der zu einer Verwendung einer uninitialisierten Variable führt und Nr. 16 zeigt einen längeren Pfad auf, der den Anfang von Nr. 15 erreicht und ab dort identisch ist. Das ist per se nicht falsch, GCC könnte diese zwei Warnungen jedoch kombinieren und als eine ausgeben.
 \
 \
-Die Warnungen 7, 8 und 14 kommen alle aus dem selben Grund zu Stande: GCC kann nur C Quellcode lesen@noauthor_analyzer_nodate. Daraus resultiert, dass kein Verhalten von Code analysiert werden kann, der entweder bereits kompiliert wurde oder in einer anderen Sprache geschrieben wurde. Im Falle von 7, 8 und 14 wurden relevante Funktionen bereits kompiliert, da sie Teil einer externen Bibliothek sind. Somit hat GCC keinen Zugriff darauf und muss Annahmen über das Verhalten der Funktionen treffen, die unter Umständen falsch sind. Zum Beispiel kan GCC bei Nr. 14 nicht wissen, dass die `strlen` Funktion nie 0 ausgiebt, unter der Bedingung, dass zuvor überprüft wurde, dass der erste Charakter der Zeichenkette, die an `strlen` übergeben wurde, ungleich null ist.
+Die Warnungen 7, 8 und 14 kommen alle aus demselben Grund zu Stande: GCC kann nur C Quellcode lesen@noauthor_analyzer_nodate. Daraus resultiert, dass kein Verhalten von Code analysiert werden kann, der entweder bereits kompiliert wurde oder in einer anderen Sprache geschrieben wurde. Im Falle von 7, 8 und 14 wurden relevante Funktionen bereits kompiliert, da sie Teil einer externen Bibliothek sind. Somit hat GCC keinen Zugriff darauf und muss Annahmen über das Verhalten der Funktionen treffen, die unter Umständen falsch sind. Zum Beispiel kann GCC bei Nr. 14 nicht wissen, dass die `strlen` Funktion nie 0 ausgibt, unter der Bedingung, dass zuvor überprüft wurde, dass der erste Charakter der Zeichenkette, die an `strlen` übergeben wurde, ungleich null ist.
 \
 \
-<W23>Die Warnungen 22 und 23 haben im Kern dasselbe Problem wie die im letzten Abschnitt beschriebenen Warnungen. GCC denkt, Variablen könnten null sein (bei 22 `item->list` und bei 23 `l`), obwohl dies nicht möglich ist. Die Variablen nehmen nämlich den Rückgabewert der `xreallocarray` Funktion an, die wiederum den Rückgabewert von `reallocarray` ausgibt, ausser diese wäre `NULL`, in diesem Fall wird das Programm beendet. 22 und 23 unterscheiden sich trotzdem vom Rest: Die Fehlermeldung lautet _«use of NULL where non-null expected»_ und bezieht sich auf ein mögliches Null-Argument an die externe `qsort` Funktion. Doch wie weiss der Compiler, dasss das Argument nicht null sein darf, obwohl wir vorher festgestellt haben, dass das Analyseprogramm keine bereits kompilierten Funktionen analysiert? Die Definition von `qsort`, die der Compiler sieht, schaut so aus:
+<W23>Die Warnungen 22 und 23 haben im Kern dasselbe Problem wie die im letzten Abschnitt beschriebenen Warnungen. GCC denkt, Variablen könnten null sein (bei 22 `item->list` und bei 23 `l`), obwohl dies nicht möglich ist. Die Variablen nehmen nämlich den Rückgabewert der `xreallocarray` Funktion an, die wiederum den Rückgabewert von `reallocarray` ausgibt, ausser diese wäre `NULL`, in diesem Fall wird das Programm beendet. 22 und 23 unterscheiden sich trotzdem vom Rest: Die Fehlermeldung lautet _«use of NULL where non-null expected»_ und bezieht sich auf ein mögliches Null-Argument an die externe `qsort` Funktion. Doch wie weiss der Compiler, dass das Argument nicht null sein darf, obwohl wir vorher festgestellt haben, dass das Analyseprogramm keine bereits kompilierten Funktionen analysiert? Die Definition von `qsort`, die der Compiler sieht, schaut so aus:
 #codly(display-icon: false)
 ```c
 extern void qsort (void *__base, size_t __nmemb, size_t __size, __compar_fn_t __compar) __nonnull ((1, 4));
 ```
-Relevant hier ist das `__nonnull` Attribut (um genau zu sein ist es ein Makro, hinter dem sich das nonnull Attribut versteckt). GCC und andere Compiler unterstützen viele Funktionsattribute, die dem jeweiligen Compiler hinweise über den Code geben. Zu beachten ist hierbei, dass die meisten nicht standartisiert sind.@noauthor_attribute_nodate Diese Hinweise kann man einerseits für Optimierungen nutzen, aber auch um die Qualität der Code Analyse zu verbessern. Ohne das `nonnull` Attribut hätte GCC kein Chance gehabt zu wissen, dass `qsort` keinen Nullpointer akzeptiert. Mithilfe dieser Attributen können Compiler korrekte Annahmen treffen, ohne aufwendig Code zu analysieren, sofern das überhaupt möglich ist. Es gibt ebenfalls das `returns_nonnull` Attribut, hätte man `xreallocarray` mit diesem Versehen, hätte GCC gewusst das hier kein Problem entstehen kann und es hätte keine falsch-positive Warnung gegeben.
+Relevant hier ist das `__nonnull` Attribut (um genau zu sein ist es ein Makro, hinter dem sich das nonnull Attribut versteckt). GCC und andere Compiler unterstützen viele Funktionsattribute, die dem jeweiligen Compiler Hinweise über den Code geben. Zu beachten ist hierbei, dass die meisten nicht standardisiert sind.@noauthor_attribute_nodate Diese Hinweise kann man einerseits für Optimierungen nutzen, aber auch um die Qualität der Code-Analyse zu verbessern. Ohne das `nonnull` Attribut hätte GCC keine Chance gehabt zu wissen, dass `qsort` keinen Nullpointer akzeptiert. Mithilfe dieser Attribute können Compiler korrekte Annahmen treffen, ohne aufwendig Code zu analysieren, sofern das überhaupt möglich ist. Es gibt ebenfalls das `returns_nonnull` Attribut, hätte man `xreallocarray` mit diesem Versehen, hätte GCC gewusst das hier kein Problem entstehen kann und es hätte keine falsch-positive Warnung gegeben.
 \
 \
-Die Restlichen Warnungen bringen im Wesentlichen keine neuen Erkenntnisse, die meisten übrigen falsch-positiven Warnungen geschehen, da GCC -- zumindest scheint es so -- jede Kondition unabhängig von den anderen als wahr oder falsch ansieht, insofern diese genug komplex sind. Das bedeutet, wenn eine Kondition "a" wahr oder falsch ist, Kondition "b" jedoch als nicht "a" definiert wird, würde GCC im folgenden Pseudocode 4 mögliche Pfäde anschauen statt nur zwei:
+Die restlichen Warnungen bringen im Wesentlichen keine neuen Erkenntnisse, die meisten übrigen falsch-positiven Warnungen geschehen, da GCC -- zumindest scheint es so -- jede Kondition unabhängig von den anderen als wahr oder falsch ansieht, insofern diese genug komplex sind. Das bedeutet, wenn eine Kondition "a" wahr oder falsch ist, Kondition "b" jedoch als nicht "a" definiert wird, würde GCC im folgenden Pseudocode 4 mögliche Pfade anschauen statt nur zwei:
 ```c
 a = maybeTrue()
 b = !a
@@ -268,10 +272,10 @@ Insgesamt kann man folgende Punkte festhalten:
 - Es werden insbesondere eher schwer zu erreichende Pfade gefunden, die man mittels dynamischer Analyse kaum findet
 
 == Cppcheck
-Cppcheck ist eine eigenständige Software zur statischen Code-Analyse und wird seit über 18 Jahren von Daniel Marjamäki entwickelt. Sie ist in vielen Entwicklungstools bereits integriert oder über ein Plugin integrierbar.@noauthor_cppcheck_nodate Die Funktionsweise wird sehr übersichtlich in einem von ihm verfassten Dokument erklärt.@marjamaki_cppcheck_2014 Der zu analysierende Code durchläuft mehrere Phasen, bevor er mithilfe von Regeln überprüft wird. Zuerst wird eine Quelldatei mittels eines Präprozessors konvertiert und danach wird der gesamte Code in einzelne Tokens aufgeteilt. Es wird ein Syntax Baum generiert mit Tokens als Knoten. Es wird daraufhin eine allgemeine Analyse durchgeführt, anhand derer verschiedene sogenannte Regeln Fehler erkennen können. Es wird jeweils nur eine Datei überprüft.
+Cppcheck ist eine eigenständige Software zur statischen Code-Analyse und wird seit über 18 Jahren von Daniel Marjamäki entwickelt. Sie ist in vielen Entwicklungstools bereits integriert oder über ein Plugin integrierbar.@noauthor_cppcheck_nodate Die Funktionsweise wird sehr übersichtlich in einem von ihm verfassten Dokument erklärt.@marjamaki_cppcheck_2014 Der zu analysierende Code durchläuft mehrere Phasen, bevor er mithilfe von Regeln überprüft wird. Zuerst wird eine Quelldatei mittels eines Präprozessors konvertiert und danach wird der gesamte Code in einzelne Tokens aufgeteilt. Es wird ein Syntax-Baum generiert mit Tokens als Knoten. Daraufhin wird eine allgemeine Analyse durchgeführt, anhand derer verschiedene sogenannte Regeln Fehler erkennen können. Dabei wird jeweils nur eine Datei überprüft.
 
 === Anwendung
-Cppcheck lässt sich leicht auf den meisten Systemen kompilieren, da viele Buildsysteme#footnote[Programm, das die Erstellung einer Software automatisiert] unterstützt werden und das Programm keine Abhängigkeiten hat neben dem Buildsystem und dem Compiler. Bereits vorkompilierte Versionen sind ebenfalls vorhanden. Im Gegensatz zu vielen anderen Analysetools ist Cppcheck bei der Anwendung auf keinerlei externe Abhängigkeiten angewiesen um Sourcecode zu analysieren, was die Anwendung erheblich erleichtert.@marjamaki_danmarcppcheck_2025 Auch ist es so simpel, die Software zu nutzen nachdem sie nicht mehr entwickelt würde. Um tmux mit Cppcheck zu überprüfen, reicht folgender Befehl im Ordner mit dem Quellcode von tmux aus:
+Cppcheck lässt sich leicht auf den meisten Systemen kompilieren, da viele Buildsysteme#footnote[Programm, das die Erstellung einer Software automatisiert] unterstützt werden und das Programm keine Abhängigkeiten hat neben dem Buildsystem und dem Compiler. Bereits vorkompilierte Versionen sind ebenfalls vorhanden. Im Gegensatz zu vielen anderen Analysetools ist Cppcheck bei der Anwendung auf keinerlei externe Abhängigkeiten angewiesen, um Sourcecode zu analysieren, was die Anwendung erheblich erleichtert.@marjamaki_danmarcppcheck_2025 Auch ist es so simpel, die Software zu nutzen, nachdem sie nicht mehr entwickelt würde. Um tmux mit Cppcheck zu überprüfen, reicht folgender Befehl im Ordner mit dem Quellcode von tmux aus:
 ```sh
 cppcheck .
 ```
@@ -279,7 +283,7 @@ Um alle Prozessorkerne zu nutzen, alle Pfade zu analysieren, die Warnungen in ei
 ```sh
 time cppcheck --check-level=exhaustive -j $(nproc) . 2> warnings.txt
 ```
-Der Rechenaufwand ist deutlich grösser als der von GCC, nämlich 9 Minuten und 2 Sekunden ohne Parallelisierung und 2 Minuten und 48 Sekunden mit Parallelisierung. Das heisst, Cppcheck benötigt run 7.5 mal mehr Zeit.
+Der Rechenaufwand ist deutlich grösser als der von GCC, nämlich 9 Minuten und 2 Sekunden ohne Parallelisierung und 2 Minuten und 48 Sekunden mit Parallelisierung. Das heisst, Cppcheck benötigt 7,5-mal mehr Zeit.
 
 
 === Auswertung
@@ -336,7 +340,7 @@ int cmd_find_target(struct cmd_find_state *fs, [...])
 		return (0);
 }
 ```
-Bei `current` handelt es sich um eine lokale Variable, das heisst sie wird nach beendigung der Funktion freigegeben. Es wird jedoch eine Referenz von `current` an `fs->current` übergeben, obwohl `fs` ein Parameter dieser Funktion ist. Das bedeutet, dass die aufrufende Funktion eine Referenz auf eine Variable erhält, die es nicht mehr gibt. Dies kann zur dereferenzierung eines hängenden Zeigers führen, ähnlich zu @GCCWarnings Nr.13.
+Bei `current` handelt es sich um eine lokale Variable, das heisst sie wird nach Beendigung der Funktion freigegeben. Es wird jedoch eine Referenz von `current` an `fs->current` übergeben, obwohl `fs` ein Parameter dieser Funktion ist. Das bedeutet, dass die aufrufende Funktion eine Referenz auf eine Variable erhält, die es nicht mehr gibt. Dies kann zur Dereferenzierung eines hängenden Zeigers führen, ähnlich zu @GCCWarnings Nr.13.
 \
 \
 Der in der Zeile vier beschriebene Fehler ist falsch-positiv und leicht begründbar: `TAILQ_HEAD` ist ein Makro, also ein Stück Text, welches noch vor der Kompilierung ersetzt wird. Eigentlich würde dies Cppcheck verstehen@marjamaki_cppcheck_2014, jedoch findet es die Definition für das Makro nicht. Dies ist der Fall, da sich die Quelldatei in einem Ordner befindet, die Datei mit der Definition jedoch nicht. Trotzdem wird die Datei mit der Definition so eingebunden, als ob sie im gleichen Ordner wäre. Beim Kompilieren funktioniert das, da im Buildsystem der Compiler angewiesen wird, alle Dateien in diesem Ordner mit einzubeziehen, also ob sie in der obersten Ordnerhierarchie wären (`Makefile.am`, Zeile 9). Ändert man in `compat/imsg-buffer.c` die Zeile
@@ -347,7 +351,7 @@ zu
 ```c
 #include "../compat.h"
 ```
-wird die Defintion für das Makro erfolgreich gefunden und der Text wird vor der Analyse ersetzt. Somit ist dann die Syntax valid und der Fehler weg. Dies zeigt eine Schwäche von Analysetools ausserhalb des Compilers auf: Entweder, sie unterstützen jedes Buildsystem, was sehr aufwändig wäre, oder aber ihnen fehlt unter Umständen essenzielle Informationen über ein Code-Projekt.
+wird die Definition für das Makro erfolgreich gefunden und der Text wird vor der Analyse ersetzt. Somit ist dann die Syntax valid und der Fehler weg. Dies zeigt eine Schwäche von Analysetools ausserhalb des Compilers auf: Entweder, sie unterstützen jedes Buildsystem, was sehr aufwendig wäre, oder aber ihnen fehlt unter Umständen essenzielle Informationen über ein Code-Projekt.
 \
 \
 Die beiden Warnungen (Zeilen 7 und 19) behandeln identische Code Strukturen an verschiedenen Stellen im Code. Die zweite Warnung ist identisch zu @GCCWarnings Nr. 23, die schon auf #ref(<W23>, form: "page") besprochen wurde. Dort wurde sie als falsch-positiv gewertet. Cppcheck hat jedoch im Gegensatz zu GCC deutlich weniger Kontext, namentlich nur eine Quelldatei auf ein Mal (inklusive via Präprozessor eingebundene Dateien). Wie GCC interpretiert auch Cppcheck Attribute, um die Qulität der Analyse zu verbessern (`tools/parse-glibc.py`, Zeile 101). Somit weiss auch Cppcheck, dass `qsort` einen nicht-`NULL`-Pointer als erstes Argument erwartet. Die Warnung wäre, wie bereits festgestellt, korrekt, wenn `xreallocarray` `NULL` zurückgeben könnte. Da Cppcheck jedoch nur die Definition von `xreallocarray` sieht und aus dieser das Verhalten nicht offensichtlich ist, geht Cppcheck logischerweise davon aus, dass `NULL` ein zulässiger Rückgabewert sei. In diesem Falle sind die Warnungen also komplett angebracht, aber schlussendlich trotzdem falsch. Da Cppcheck jedoch (anders als GCC) zwischen «warning» und «error» unterscheidet, ist eine falsch-positive Warnung auch weniger schlimm.
@@ -356,10 +360,10 @@ Die beiden Warnungen (Zeilen 7 und 19) behandeln identische Code Strukturen an v
 Dies kann man über Cppcheck festhalten:
 - Cppcheck meldet im Vergleich zu anderen Analysewerkzeugen weniger Fehler, dafür mit höherer Präzision und im Abtausch mit Rechenzeit
 - Da Cppcheck nicht in einem Compiler integriert ist fehlt unter Umständen Kontext, die der Compiler hat
-- Da Cppcheck das Buildsystem nicht ausliest, fehlt unter Umständen weiterer wichitiger Kontext
-- Auch Cppcheck macht sich Attribute zunütze, was die Qualität der Analyse erhöht
-== weitere Programme
-=== clang
+- Da Cppcheck das Buildsystem nicht ausliest, fehlt unter Umständen weiterer wichtiger Kontext
+- Auch Cppcheck macht sich Attribute zunutze, was die Qualität der Analyse erhöht
+== Weitere Programme
+=== Clang
 Clang hat ebenfalls ein statisches Analysetool und nutzt verschiedene «checkers», die den Code auf bestimmte Eigenschaften prüfen. Hierbei profitiert das Analysetool von den bereits für die Clang-Infrastruktur geschriebenen Bibliotheken.
 ==== Anwendung
 Clang bietet den Wrapper «scan-build» an, diesen setzt man vor den Build-Befehl und schon funktioniert alles:
@@ -393,25 +397,30 @@ Aufgrund der Komplexität der Auswertung von den Warnungen wird hier auf die Unt
   table(
     columns: 2,
     table.header([Codestelle], [Überlappung]),
-    [window-tree.c:450], [cppcheck],
-    [window-tree.c:496], [cppcheck, gcc(23)],
-    [window-client.c:189], [gcc(22)],
-    [window-tree.c:949], [gcc(24,25)],
-    [spawn.c:181], [gcc(18)],
-    [server-client.c:2946], [gcc(17)],
-    [cmd-pipe-pane.c:144], [gcc(3)],
-    [cmd-pipe-pane.c:156], [gcc(6)],
-    [cmd-pipe-pane.c:153], [gcc(5)],
-    [server-client.c:613], [gcc(15,16)],
-    [job.c:157], [gcc(9)],
-    [arguments.c:750], [gcc(1)],
-    [mode-tree.c:1132], [gcc(13)],
+    table.cell(fill: red)[window-tree.c:450], table.cell(fill: red)[cppcheck],
+    table.cell(fill: red)[window-tree.c:496],
+    table.cell(fill: red)[cppcheck, gcc(23)],
+    table.cell(fill: red)[window-client.c:189], table.cell(fill: red)[gcc(22)],
+    table.cell(fill: green)[window-tree.c:949],
+    table.cell(fill: green)[gcc(24,25)],
+    table.cell(fill: red)[spawn.c:181], table.cell(fill: red)[gcc(18)],
+    table.cell(fill: green)[server-client.c:2946],
+    table.cell(fill: green)[gcc(17)],
+    table.cell(fill: red)[cmd-pipe-pane.c:144], table.cell(fill: red)[gcc(3)],
+    table.cell(fill: red)[cmd-pipe-pane.c:156], table.cell(fill: red)[gcc(6)],
+    table.cell(fill: red)[cmd-pipe-pane.c:153], table.cell(fill: red)[gcc(5)],
+    table.cell(fill: green)[server-client.c:613],
+    table.cell(fill: green)[gcc(15,16)],
+    table.cell(fill: red)[job.c:157], table.cell(fill: red)[gcc(9)],
+    table.cell(fill: red)[arguments.c:750], table.cell(fill: red)[gcc(1)],
+    table.cell(fill: green)[mode-tree.c:1132], table.cell(fill: green)[gcc(13)],
   ),
   caption: [Mit GCC oder Cppcheck überlappende Meldungen],
 )
-Bei GCC steht zusätzlich noch die Nummer der Warnung in Klammern (ersichtlich in @GCCWarnings). Es ist durchaus bemerkenswert, dass clang so viel meldet und hierbei einen grossen Teil der Warnungen von GCC und Cppchecker ebenfalls findet. Die Meldungen werden bei Clang am übersichtlichsten in Form von einer Website dargestellt.
+Bei GCC steht zusätzlich noch die Nummer der Warnung in Klammern (ersichtlich in @GCCWarnings). Es ist durchaus bemerkenswert, dass Clang so viel meldet und hierbei einen grossen Teil der Warnungen von GCC und Cppcheck ebenfalls findet. Die Meldungen werden bei Clang am übersichtlichsten in Form von einer Website dargestellt.\
+Falsch-positive Fehler sind rot eingefärbt, korrekte grün. Beachtet man nur diese überlappenden Fehler, kommt Clang auf eine Genauigkeit von leicht über 30%, was sowohl Cppcheck als auch GCC schlägt. Ohne Auswertung von all den anderen Warnungen hat dies jedoch keine Aussagekraft.
 === SMOKE
-SMOKE verspricht einen schnelleren, präziseren und besser skalierbaren Ansatz zur Analyse, insbesondere grosser Mengen Code. Im Vergleich zu den zuvor angeschauten Methoden nutzt Smoke zwei voneinander getrennten Analysen, wobei die erste pfadunsensibel ist, um möglichst schnell möglichst schnell viel Code zu analysieren. Da die pfadunsensible Analyse jedoch in der Regel bedeutend ungenauer ist, findet in einem zweiten Schritt eine rechenintensivere pfadsensible Analyse statt. Auch bei sehr grossen Mengen Code kann SMOKE so eine gute Leistung bieten, da der grösste Teil des Codes schon in der ersten, schnelleren Phase rausgefiltert wird.@fan_smoke_2019
+SMOKE verspricht einen schnelleren, präziseren und besser skalierbaren Ansatz zur Analyse, insbesondere grosser Mengen Code. Im Vergleich zu den zuvor angeschauten Methoden nutzt Smoke zwei voneinander getrennten Analysen, wobei die erste pfadunsensibel ist, um möglichst schnell viel Code zu analysieren. Da die pfadunsensible Analyse jedoch in der Regel bedeutend ungenauer ist, findet in einem zweiten Schritt eine rechenintensivere pfadsensible Analyse statt. Auch bei sehr grossen Mengen Code kann SMOKE so eine gute Leistung bieten, da der grösste Teil des Codes schon in der ersten, schnelleren Phase rausgefiltert wird.@fan_smoke_2019
 
 ==== Anwendung
 SMOKE arbeitet wie einige andere statische Analysetools (@emamdoost_detecting_2021,@suzuki_detecting_2020,@wang_mlee_nodate) mit der LLVM IR. Der zu untersuchende Code muss mit der Clang-Toolchain der Version 3.6 kompiliert werden. Um den Bitcode (also die IR) zu extrahieren, kann gllvm@noauthor_sri-cslgllvm_nodate gebraucht werden. Die genauen Schritte dazu finden sich auf dem zu dieser Arbeit gehörenden GitHub Repository.@drybonemarrow_drybonemarrowmaturaarbeit_2025
@@ -442,7 +451,7 @@ USAGE: pp-check [options] <input bitcode>
 Die Entwickler von SMOKE haben ein Tool namens `pp-capture`, um ein Projekt in das richtige Format zu bringen, dieses befindet sich jedoch auch auf dem Server.
 
 = Auswertung
-Die Auswertung der individuellen Tools wurde bereits in den jeweiligen Kapiteln durchgeführt. Diese hat ergeben, dass durchaus Speicherfehler mithilfe von statischer Code-Analyse gefunden werden können. Einer der grössten Knackpunkte ist, dass oft Annahmen über das Verhalten gewisser Funktionen gemacht werden müssen. Hier sehe ich grosses Potenzial in Attributen, wenn diese erweitert und konsequent eingesetzt würden. Analysewerkzeuge müssten deutlich weniger Arbeit leisten und dabei würde noch die Effizienz und Genauigkeit gesteigert werden. Auch gilt es, den Kompromiss zwischen benötigter Rechenleistung und Genauigkeit zu finden. Je kürzer die Rechenzeit, desto eher wird ein Tool verwendet werden. Jedoch gilt auch: Je unzuverlässiger ein Tool, desto eher wird es gemieden. Am besten werden verschiedene Tools mit unterschiedlichen Stärken und Schwächen kombiniert.@noauthor_cppcheck_nodate Das Beispiel SMOKE hat gezeigt, dass ein Werkzeug noch so toll klingen mag in der Theorie, ohne eine anständige Implementierung und Unterstützung bringt es nichts. Ein weiteres Prachtexemplar hierfür ist K-MELD@emamdoost_detecting_2021, es wurde jedoch aus Platz- und Zeitgründen weggelassen. 
+Die Auswertung der individuellen Tools wurde bereits in den jeweiligen Kapiteln durchgeführt. Diese hat ergeben, dass durchaus Speicherfehler mithilfe von statischer Code-Analyse gefunden werden können. Einer der grössten Knackpunkte ist, dass oft Annahmen über das Verhalten gewisser Funktionen gemacht werden müssen. Hier sehe ich grosses Potenzial in Attributen, wenn diese erweitert und konsequent eingesetzt würden. Analysewerkzeuge müssten deutlich weniger Arbeit leisten und dabei würde noch die Effizienz und Genauigkeit gesteigert werden. Auch gilt es, den Kompromiss zwischen benötigter Rechenleistung und Genauigkeit zu finden. Je kürzer die Rechenzeit, desto eher wird ein Tool verwendet werden. Jedoch gilt auch: Je unzuverlässiger ein Tool, desto eher wird es gemieden. Am besten werden verschiedene Tools mit unterschiedlichen Stärken und Schwächen kombiniert.@noauthor_cppcheck_nodate Das Beispiel SMOKE hat gezeigt, dass ein Werkzeug noch so toll klingen mag in der Theorie, ohne eine anständige Implementierung und Unterstützung bringt es nichts. Ein weiteres Prachtexemplar hierfür ist K-MELD@emamdoost_detecting_2021, es wurde jedoch aus Platz- und Zeitgründen weggelassen.
 
 == Vergleich mit anderen Methoden
 Dynamische Code-Analyse hat den Vorteil, dass sie auch nicht vorprogrammierte Bugs entdecken kann und weniger Leistung benötigt. Jedoch ist es unwahrscheinlich, mithilfe dynamischer Analyse sehr verschachtelte, abwegige Pfade zu erwischen, die Bugs auslösen können, denn hierfür muss dieser Zustand zufällig im laufenden Programm erreicht werden.
@@ -462,59 +471,187 @@ In dieser Arbeit wurde mithilfe von Experimenten die praktische Anwendung statis
       columns: 3,
       align: (center, center, left),
       table.header([Nr.], [Korrekt], [Warnung]),
-      [1], [], [arguments.c:750:17: warning: use of uninitialized value ‘error’ [CWE-457] [-Wanalyzer-use-of-uninitialized-value]],
-      [2], [], [cmd-pipe-pane.c:141:28: warning: leak of file descriptor ‘dup2(pipe_fd[1], 0)’ [CWE-775] [-Wanalyzer-fd-leak]],
+      [1],
+      [],
+      [arguments.c:750:17: warning: use of uninitialized value ‘error’ [CWE-457] [-Wanalyzer-use-of-uninitialized-value]],
 
-      [3], [], [cmd-pipe-pane.c:144:29: warning: ‘dup2’ on possibly invalid file descriptor ‘null_fd’ [-Wanalyzer-fd-use-without-check]],
+      [2],
+      [],
+      [cmd-pipe-pane.c:141:28: warning: leak of file descriptor ‘dup2(pipe_fd[1], 0)’ [CWE-775] [-Wanalyzer-fd-leak]],
 
-      [4], [], [cmd-pipe-pane.c:148:28: warning: leak of file descriptor ‘dup2(pipe_fd[1], 1)’ [CWE-775] [-Wanalyzer-fd-leak]],
+      [3],
+      [],
+      [cmd-pipe-pane.c:144:29: warning: ‘dup2’ on possibly invalid file descriptor ‘null_fd’ [-Wanalyzer-fd-use-without-check]],
 
-      [5], [], [cmd-pipe-pane.c:153:29: warning: ‘dup2’ on possibly invalid file descriptor ‘null_fd’ [-Wanalyzer-fd-use-without-check]],
+      [4],
+      [],
+      [cmd-pipe-pane.c:148:28: warning: leak of file descriptor ‘dup2(pipe_fd[1], 1)’ [CWE-775] [-Wanalyzer-fd-leak]],
 
-      [6], [], [cmd-pipe-pane.c:156:21: warning: ‘dup2’ on possibly invalid file descriptor ‘null_fd’ [-Wanalyzer-fd-use-without-check]],
+      [5],
+      [],
+      [cmd-pipe-pane.c:153:29: warning: ‘dup2’ on possibly invalid file descriptor ‘null_fd’ [-Wanalyzer-fd-use-without-check]],
 
-      [7], [], [cmd-rotate-window.c:74:33: warning: dereference of NULL ‘wp’ [CWE-476] [-Wanalyzer-null-dereference]],
+      [6],
+      [],
+      [cmd-pipe-pane.c:156:21: warning: ‘dup2’ on possibly invalid file descriptor ‘null_fd’ [-Wanalyzer-fd-use-without-check]],
 
-      [8], [], [cmd-rotate-window.c:99:33: warning: dereference of NULL ‘wp’ [CWE-476] [-Wanalyzer-null-dereference]],
+      [7],
+      [],
+      [cmd-rotate-window.c:74:33: warning: dereference of NULL ‘wp’ [CWE-476] [-Wanalyzer-null-dereference]],
 
-      [9], [], [job.c:157:28: warning: leak of file descriptor ‘dup2(out[1], 0)’ [CWE-775] [-Wanalyzer-fd-leak]],
+      [8],
+      [],
+      [cmd-rotate-window.c:99:33: warning: dereference of NULL ‘wp’ [CWE-476] [-Wanalyzer-null-dereference]],
 
-      [10], [], [job.c:160:28: warning: leak of file descriptor ‘dup2(out[1], 1)’ [CWE-775] [-Wanalyzer-fd-leak]],
+      [9],
+      [],
+      [job.c:157:28: warning: leak of file descriptor ‘dup2(out[1], 0)’ [CWE-775] [-Wanalyzer-fd-leak]],
 
-      [11], [], [job.c:164:36: warning: leak of file descriptor ‘dup2(out[1], 2)’ [CWE-775] [-Wanalyzer-fd-leak]],
+      [10],
+      [],
+      [job.c:160:28: warning: leak of file descriptor ‘dup2(out[1], 1)’ [CWE-775] [-Wanalyzer-fd-leak]],
 
-      [12], [], [job.c:171:36: warning: leak of file descriptor ‘dup2(nullfd, 2)’ [CWE-775] [-Wanalyzer-fd-leak]],
+      [11],
+      [],
+      [job.c:164:36: warning: leak of file descriptor ‘dup2(out[1], 2)’ [CWE-775] [-Wanalyzer-fd-leak]],
 
-      [13], [x], [mode-tree.c:1132:32: warning: use after ‘free’ of ‘mtd’ [CWE-416] [-Wanalyzer-use-after-free]],
+      [12],
+      [],
+      [job.c:171:36: warning: leak of file descriptor ‘dup2(nullfd, 2)’ [CWE-775] [-Wanalyzer-fd-leak]],
 
-      [14], [], [regsub.c:116:18: warning: dereference of NULL ‘0’ [CWE-476] [-Wanalyzer-null-dereference]],
+      [13],
+      [x],
+      [mode-tree.c:1132:32: warning: use after ‘free’ of ‘mtd’ [CWE-416] [-Wanalyzer-use-after-free]],
 
-      [15], [x], [server-client.c:613:52: warning: use of uninitialized value ‘line’ [CWE-457] [-Wanalyzer-use-of-uninitialized-value]],
+      [14],
+      [],
+      [regsub.c:116:18: warning: dereference of NULL ‘0’ [CWE-476] [-Wanalyzer-null-dereference]],
 
-      [16], [Duplikat \ von 15], [server-client.c:613:52: warning: use of uninitialized value ‘line’ [CWE-457] [-Wanalyzer-use-of-uninitialized-value] (bewusst duplikat)],
+      [15],
+      [x],
+      [server-client.c:613:52: warning: use of uninitialized value ‘line’ [CWE-457] [-Wanalyzer-use-of-uninitialized-value]],
 
-      [17], [x], [server-client.c:2946:33: warning: dereference of NULL ‘s’ [CWE-476] [-Wanalyzer-null-dereference]],
+      [16],
+      [Duplikat \ von 15],
+      [server-client.c:613:52: warning: use of uninitialized value ‘line’ [CWE-457] [-Wanalyzer-use-of-uninitialized-value] (bewusst duplikat)],
 
-      [18], [], [spawn.c:181:23: warning: dereference of NULL ‘w’ [CWE-476] [-Wanalyzer-null-dereference]],
+      [17],
+      [x],
+      [server-client.c:2946:33: warning: dereference of NULL ‘s’ [CWE-476] [-Wanalyzer-null-dereference]],
 
-      [19], [x], [status.c:1691:21: warning: dereference of NULL ‘list’ [CWE-476] [-Wanalyzer-null-dereference]],
+      [18],
+      [],
+      [spawn.c:181:23: warning: dereference of NULL ‘w’ [CWE-476] [-Wanalyzer-null-dereference]],
 
-      [20], [], [status.c:1907:25: warning: dereference of NULL ‘s’ [CWE-476] [-Wanalyzer-null-dereference]],
+      [19],
+      [x],
+      [status.c:1691:21: warning: dereference of NULL ‘list’ [CWE-476] [-Wanalyzer-null-dereference]],
 
-      [21], [], [status.c:2062:44: warning: dereference of NULL ‘0’ [CWE-476] [-Wanalyzer-null-dereference]],
+      [20],
+      [],
+      [status.c:1907:25: warning: dereference of NULL ‘s’ [CWE-476] [-Wanalyzer-null-dereference]],
 
-      [22], [], [window-client.c:189:9: warning: use of NULL where non-null expected [CWE-476] [-Wanalyzer-null-argument]],
+      [21],
+      [],
+      [status.c:2062:44: warning: dereference of NULL ‘0’ [CWE-476] [-Wanalyzer-null-dereference]],
 
-      [23], [], [window-tree.c:496:9: warning: use of NULL ‘l’ where non-null expected [CWE-476] [-Wanalyzer-null-argument]],
+      [22],
+      [],
+      [window-client.c:189:9: warning: use of NULL where non-null expected [CWE-476] [-Wanalyzer-null-argument]],
 
-      [24], [x], [window-tree.c:949:22: warning: dereference of NULL ‘other_winlink’ [CWE-476] [-Wanalyzer-null-dereference]],
+      [23],
+      [],
+      [window-tree.c:496:9: warning: use of NULL ‘l’ where non-null expected [CWE-476] [-Wanalyzer-null-argument]],
 
-      [25], [x], [window-tree.c:949:22: warning: dereference of NULL ‘cur_winlink’ [CWE-476] [-Wanalyzer-null-dereference]],
+      [24],
+      [x],
+      [window-tree.c:949:22: warning: dereference of NULL ‘other_winlink’ [CWE-476] [-Wanalyzer-null-dereference]],
+
+      [25],
+      [x],
+      [window-tree.c:949:22: warning: dereference of NULL ‘cur_winlink’ [CWE-476] [-Wanalyzer-null-dereference]],
     )
   ]<GCCWarnings>]
 }
 
 #pagebreak()
 
-#bibliography("Bibliografie.bib",)
+#show bibliography: none
+#bibliography("Bibliografie.bib")
 
+= Bibliografie <nonumber>
+
+
+#set strong(delta: 0)
+#table(
+  columns: (auto, auto),
+  stroke: none,
+  [[1]],
+  [ Rebert, Alex; Kern, Christoph: _Secure by Design: Google's Perspective on Memory Safety_. Google Security Engineering, 2024.],
+
+  [[2]],
+  [ NSA, CISA: _Memory Safe Languages: Reducing Vulnerabilities in Modern Software Development_. 2025.],
+
+  [[3]], [ NSA: _Software Memory Safety_. 2023.],
+  [[4]], [ CISA: _The Case for Memory Safe Roadmaps_. 2023.],
+  [[5]],
+  [ Gosain, Anjana; Sharma, Ganga: _Static Analysis: A Survey of Techniques and Tools_. 2015.],
+
+  [[6]],
+  [ Wögerer, Wolfgang: _A Survey of Static Program Analysis Techniques_. 2005.],
+
+  [[7]],
+  [ Gang, Fan et al.: _SMOKE: Scalable Path-Sensitive Memory Leak Detection for Millions of Lines of Code_. 2019.],
+
+  [[8]],
+  [ dryBoneMarrow: _Maturitätsarbeit 2026 - statische Code-Analyse_. Auf: https://github.com/dryBoneMarrow/Maturaarbeit (abgerufen am 19. Oktober 2025)],
+
+  [[9]],
+  [ Wikipedia: _Tmux_. Auf: https://de.wikipedia.org/w/index.php?title=Tmux&oldid=260646344 (abgerufen am 19. Oktober 2025)],
+
+  [[10]],
+  [ GNU: _StaticAnalyzer - GCC Wiki_. Auf: https://gcc.gnu.org/wiki/StaticAnalyzer (abgerufen am 16. Oktober 2025)],
+
+  [[11]],
+  [ Malcom, David: _Improvements to static analysis in the GCC 13 compiler_. Auf: https://developers.redhat.com/articles/2023/05/31/improvements-static-analysis-gcc-13-compiler (abgerufen am 19. Oktober 2025)],
+
+  [[12]],
+  [ GNU: _IPA passes (GNU Compiler Collection (GCC) Internals)_. Auf: https://gcc.gnu.org/onlinedocs/gccint/IPA-passes.html (abgerufen am 16. Oktober 2025)],
+
+  [[13]],
+  [ OpenBSD: _Installing · tmux/tmux Wiki_. Auf: https://github.com/tmux/tmux/wiki/Installing#from-version-control (abgerufen am 16. Oktober 2025)],
+
+  [[14]],
+  [ Open Group: _dup(3p)_. Auf: https://man.archlinux.org/man/dup.3p.en (abgerufen am 15. Oktober 2025)],
+
+  [[15]],
+  [ Steenkamer, Benjamin P: _An empirical study on use-after-free vulnerabilities_. 2019.],
+
+  [[16]],
+  [ GNU: _Analyzer Internals (GNU Compiler Collection (GCC) Internals)_. Auf: https://gcc.gnu.org/onlinedocs/gccint/Analyzer-Internals.html (abgerufen am 17. Oktober 2025)],
+
+  [[17]],
+  [ cppreference: _Attribute specifier sequence_. Auf: https://en.cppreference.com/w/c/language/attributes.html (abgerufen am 17. Oktober 2025)],
+
+  [[18]],
+  [ Marjamäki, Daniel: _Cppcheck - A tool for static C/C++ code analysis_. Auf: http://cppcheck.net/ (abgerufen am 18. Oktober 2025)],
+
+  [[19]], [ Marjamäki, Daniel: _Cppcheck Design_. 2014.],
+  [[20]],
+  [ Marjamäki, Daniel: _danmar/cppcheck_. Auf: https://github.com/danmar/cppcheck (abgerufen am 18. Oktober 2025)],
+
+  [[21]],
+  [ Emamdoost, Navid et al.: _Detecting Kernel Memory Leaks in Specialized Modules with Ownership Reasoning_. 2021],
+
+  [[22]],
+  [ Suzuki, Keita et al.: _Detecting Struct Member-Related Memory Leaks Using Error Code Analysis in Linux Kernel_. 2020.],
+
+  [[23]],
+  [ Wang, Wenwen: _MLEE: Effective Detection of Memory Leaks on Early-Exit Paths in OS Kernerls_. 2021.],
+
+  [[24]],
+  [ SRI-CSL: _Whole Program LLVM: wllvm ported to go_. Auf: https://github.com/SRI-CSL/gllvm (abgerufen am 19. Oktober 2025)],
+
+  [[25]],
+  [ Gang, Fan et al.: _SMOKE Memory Leak Detector_. Auf: https://smokeml.github.io/ (abgerufen am 19. Oktober 2025)],
+)

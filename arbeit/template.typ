@@ -74,12 +74,10 @@
 
   v(2.4fr)
   pagebreak()
+  pagebreak()
 
 
   // Abstract page.
-  // Beginning here line numbering
-  set page(numbering: "1", number-align: center)
-  counter(page).update(1)
   v(1fr)
   align(center)[
     #heading(
@@ -91,14 +89,18 @@
   ]
   v(1.618fr)
   pagebreak()
-
+  pagebreak()
   // Table of contents.
   outline(depth: 3)
+  pagebreak()
   pagebreak()
 
   // Main body.
   set par(justify: true)
   // show bibliography: none
+   // Beginning here line numbering
+  set page(numbering: "1", number-align: center)
+  counter(page).update(1)
   body
 }
 #let red = rgb("#f77e7e");
